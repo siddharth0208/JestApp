@@ -1,10 +1,14 @@
-import React from 'react';
-import renderer from 'react-test-renderer';
+/**
+ * @format
+ */
+
 import 'react-native';
-import PostDetails from '../src/screens/PostDetails';
-test('renders correctly', () => {
-  const tree = renderer
-    .create(<PostDetails navigation={undefined} route={undefined} />)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
+import React from 'react';
+import App from '../App';
+
+import renderer from 'react-test-renderer';
+
+test('App snapshot', () => {
+  const snapshot = renderer.create(<App />).toJSON();
+  expect(snapshot).toMatchSnapshot();
 });

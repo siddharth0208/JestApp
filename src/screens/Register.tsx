@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import uuid from 'react-native-uuid';
 import database from '@react-native-firebase/database';
 import Toast from 'react-native-simple-toast';
 import {TextInput} from 'react-native-paper';
 import {RegisterDataType} from './Type';
+import {useIsFocused} from '@react-navigation/native';
 
 const Register = ({navigation}: {navigation: any}) => {
   const [name, setName] = useState<string>('');
@@ -19,17 +21,26 @@ const Register = ({navigation}: {navigation: any}) => {
   const [number, setNumber] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+  var emailpattern =
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
   const registerUser = async () => {
     if (
       name == '' ||
-      name.length > 6 ||
       email == '' ||
       number == '' ||
       password == '' ||
-      confirmPassword == '' ||
-      password != confirmPassword
+      confirmPassword == ''
     ) {
-      Alert.alert('fill all the field');
+      Alert.alert('fill all the field!');
+      return false;
+    }
+    if (password != confirmPassword) {
+      Alert.alert('Password and confirm password Not Mtached!');
+      return false;
+    }
+    if (emailpattern.test(email) === false) {
+      Alert.alert('email is not valid');
       return false;
     }
     let data: RegisterDataType = {
@@ -106,7 +117,7 @@ const Register = ({navigation}: {navigation: any}) => {
           secureTextEntry={true}></TextInput>
       </View>
 
-      <View style={{alignSelf: 'center', marginBottom: 25}}>
+      <View style={{alignSelf: 'center', bottom: 0}}>
         <TouchableOpacity
           style={styles.btn}
           onPress={() => {

@@ -57,7 +57,7 @@ const Post = ({navigation}: {navigation: any}) => {
       <TouchableOpacity
         style={styles.btn}
         onPress={() => {
-          navigation.navigate('Login');
+          navigation.navigate('Register');
         }}>
         <Text style={styles.btnText}>Log Out</Text>
       </TouchableOpacity>

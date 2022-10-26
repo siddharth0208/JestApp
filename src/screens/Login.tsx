@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import database from '@react-native-firebase/database';
 import {TextInput} from 'react-native-paper';
 import Toast from 'react-native-simple-toast';
@@ -7,6 +14,7 @@ import Toast from 'react-native-simple-toast';
 const Login = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const loginUser = async () => {
     if (email == '' || password == '') {
       Alert.alert('Fill all the field');
